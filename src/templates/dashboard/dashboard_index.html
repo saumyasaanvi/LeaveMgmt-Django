@@ -1,0 +1,144 @@
+
+{% extends '_layout.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block stylesheet %}
+<style>
+    body {
+            min-height: 100vh;
+            font-family: 'Alice', serif;
+            background: linear-gradient(120deg, #428ed0 0%, #b3c6e7 100%);
+            position: relative;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: url("{% static 'img/image.png' %}") no-repeat center center/cover;
+            opacity: 0.25;
+            z-index: -1;
+            pointer-events: none;
+        }
+.dashboard-row {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 32px;
+}
+.dashboard-card {
+    width: 400px;
+    margin-left: 100px;
+    min-height: 170px;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px 0 rgba(137,207,240,0.18);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    background: #fff;
+    margin-bottom: 1rem;
+    position: relative;
+    padding: 1.5rem 1rem;
+    ;
+}
+.dashboard-card:hover {
+   transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 12px 40px 0 rgba(137,207,240,0.22);
+}
+.dashboard-card .icon {
+    font-size: 3.6rem;
+    margin-bottom: 10px;
+    color: #ddcccc;
+    padding: 20px;
+    border-radius: 50%;
+    margin-top: -30px;
+    box-shadow: 0 2px 12px rgba(66,142,208,0.10);
+}
+.employee-bg {
+    background: linear-gradient(120deg, #d04247 60%, #5a4747 100%);
+}
+.leave-bg {
+    background: linear-gradient(120deg, #428ed0 60%, #7ec8e3 100%);
+}
+.staffleave-bg {
+    background: linear-gradient(120deg, #8664ad 60%, #b3c6e7 100%);
+}
+.dashboard-card .metric-title {
+    font-size: 1.8rem;
+    color: #0d0c0c;
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.dashboard-card .metric-value {
+    font-size: 2.1rem;
+    font-weight: bold;
+    color: #222;
+    
+    background-color: #edf0f2;
+    border-radius: 30px;
+    padding: 10px 10px;
+    box-shadow: 0 2px 12px rgba(66,142,208,0.15);
+    transition: background-color 0.3s, color 0.3s;}
+@media (max-width: 900px) {
+    .dashboard-row {
+        flex-direction: column;
+        gap: 24px;
+        align-items: center;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="content">
+    <section class="container-fluid">
+        <div class="dashboard-row">
+            {% if request.user.is_superuser and request.user.is_staff %}
+                <div class="dashboard-card employee-bg">
+                    <div class="icon"><i class="fa fa-users"></i></div>
+                    <div class="metric-title">Registered Employees</div>
+                    <div class="metric-value">{{ employees.count }}</div>
+                </div>
+                <div class="dashboard-card leave-bg">
+                    <div class="icon"><i class="fa fa-users"></i></div>
+                    <div class="metric-title">Leaves Requested</div>
+                    <div class="metric-value">{{ leaves.count }}</div>
+                </div>
+            {% else %}
+                <div class="dashboard-card staffleave-bg">
+                    <div class="icon"><i class="fa fa-calendar"></i></div>
+                    <div class="metric-title">Total Leaves</div>
+                    <div class="metric-value">{{ staff_leaves.count }}</div>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+</section>
+{% endblock %}
+
+{% block extrajs %}
+<script>
+    $(document).ready(function(){
+        var get_login_user = '{{request.user.username}}';
+        console.log(get_login_user);
+
+        // Chartist or any other dashboard JS initialization can go here
+        // demo.initChartist();
+
+        $.notify({
+            icon: 'fa fa-user',
+            message: "Welcome to LMS Django, " + get_login_user
+        },{
+            type: 'danger',
+            timer: 4000
+        });
+    });
+</script>
+{% endblock %}

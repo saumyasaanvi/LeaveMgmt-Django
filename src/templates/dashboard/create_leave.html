@@ -1,0 +1,259 @@
+{% extends '_layout.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block navheader %}
+    {% include 'includes/navheader_employee_app.html' %}
+{% endblock %}
+
+{% block stylesheet %}
+/* Create Leave Form Styling */
+input[type="text"], input[type="date"] {
+    border: 1px solid #428ed0;
+    border-radius: 5px;
+    padding: 8px;
+}
+#override-start {
+    background: none !important;
+    top: 35% !important;
+    right: 13px;
+    color: #000;
+    font-size: 24px;
+}
+
+.alert-warning {
+    background: linear-gradient(90deg, #fd7b7b 0%, #ff9999 100%);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.alert-success {
+    background: linear-gradient(90deg, #82b72a 0%, #a3d63c 100%);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.alert-success, .alert-warning {
+    font-size: 16px;
+}
+
+.form-wrapper {
+    background: rgba(255, 255, 255, 0.9) !important;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px 0 rgba(137, 207, 240, 0.15);
+    backdrop-filter: blur(6px);
+    padding: 40px;
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+.btn-lg {
+    padding: 12px 40px;
+    background: linear-gradient(90deg, #428ed0 60%, #7ec8e3 100%);
+    color: #fff !important;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 30px;
+    box-shadow: 0 4px 16px rgba(66, 142, 208, 0.12);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-lg:hover {
+    background: linear-gradient(90deg, #7ec8e3 0%, #428ed0 100%);
+    color: #fff;
+    box-shadow: 0 8px 24px rgba(66, 142, 208, 0.18);
+    transform: translateY(-2px);
+}
+
+.main-panel > .content {
+    padding: 40px 20px;
+    min-height: calc(100vh - 123px);
+}
+
+/* Form Field Styling */
+.form-group label {
+    color: #428ed0;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.form-control {
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 12px 16px;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.form-control:focus {
+    border-color: #428ed0;
+    box-shadow: 0 0 0 0.2rem rgba(66, 142, 208, 0.25);
+}
+
+/* Datepicker Styling */
+.datepicker {
+    z-index: 9999 !important;
+}
+
+.ui-datepicker {
+    background: #fff;
+    border: 2px solid #428ed0;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(66, 142, 208, 0.15);
+    font-family: 'Alice', serif;
+}
+
+.ui-datepicker-header {
+    background: linear-gradient(90deg, #428ed0 60%, #7ec8e3 100%);
+    color: #fff;
+    border-radius: 10px 10px 0 0;
+    border: none;
+}
+
+.ui-datepicker-title {
+    color: #fff;
+    font-weight: bold;
+}
+
+.ui-datepicker-prev, .ui-datepicker-next {
+    color: #fff;
+}
+
+.ui-datepicker-calendar td a {
+    color: #428ed0;
+    text-decoration: none;
+    padding: 8px;
+    border-radius: 6px;
+}
+
+.ui-datepicker-calendar td a:hover {
+    background: #428ed0;
+    color: #fff;
+}
+
+.ui-datepicker-today a {
+    background: #7ec8e3 !important;
+    color: #fff !important;
+}
+
+.ui-state-active {
+    background: #428ed0 !important;
+    color: #fff !important;
+}
+
+/* Title Styling */
+.title-h3 {
+    font-family: 'Russo One', sans-serif;
+    color: #428ed0;
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .form-wrapper {
+        padding: 20px;
+        margin: 10px;
+        border-radius: 15px;
+    }
+    
+    .title-h3 {
+        font-size: 1.8rem;
+    }
+    
+    .btn-lg {
+        padding: 10px 30px;
+        font-size: 1rem;
+    }
+}
+{% endblock %}
+
+{% block content %}
+<section class="content">
+    <section class="container-fluid">
+        <!-- Alert Messages -->
+        <section class="row">
+            <section class="col-lg-10 offset-lg-1">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                            <button type="button" class="close" id="override-start" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </section>
+        </section>
+
+        <!-- Leave Request Form -->
+        <section class="form-wrapper">
+            <!-- Form Title -->
+            <section class="row">
+                <section class="col-12 text-center">
+                    <h3 class="title-h3">{{ title }}</h3>
+                    <p style="color: #666; font-size: 1.1rem; margin-bottom: 30px;">
+                        Please fill out the form below to request leave from work.
+                    </p>
+                </section>
+            </section>
+
+            <!-- Form Content -->
+            <section class="row">
+                <section class="col-lg-8 offset-lg-2">
+                    <form action="{% url 'dashboard:createleave' %}" method="POST">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        
+                        <!-- Submit Button -->
+                        <div class="text-center" style="margin-top: 30px;">
+                            <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                <i class="fa fa-paper-plane"></i> Request Leave
+                            </button>
+                        </div>
+                        
+                        <!-- Help Text -->
+                        <div class="text-center" style="margin-top: 20px;">
+                            <small style="color: #666;">
+                                Your leave request will be reviewed by the HR department.
+                            </small>
+                        </div>
+                    </form>
+                </section>
+            </section>
+        </section>
+    </section>
+</section>
+{% endblock %}
+
+
+{% block extrajs %}
+<script src="{% static 'js/datepicker.js' %}"></script>
+<script>
+$(document).ready(function(){
+    $('#id_start_date, #id_end_date').datepicker({
+        dateFormat: 'yy-mm-dd',
+        changeMonth: true,
+        changeYear: true,
+        minDate: 0
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,164 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="{% static 'assets/img/favicon.ico' %}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Leave Management Django</title>
+
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/pe-icon-7-stroke.css' %}" rel="stylesheet" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Anton|Russo+One|Luckiest+Guy|Alice&display=swap" rel="stylesheet">
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            min-height: 100vh;
+            font-family: 'Alice', serif;
+            background: linear-gradient(120deg, #428ed0 0%, #b3c6e7 100%);
+            position: relative;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: url("{% static 'img/image.png' %}") no-repeat center center/cover;
+            opacity: 0.5;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .navbar {
+            background: rgba(255,255,255,0.85);
+            border: none;
+            box-shadow: 0 2px 12px rgba(66,142,208,0.08);
+        }
+        .navbar-brand {
+            font-family: 'Russo One', 'Trebuchet MS', Arial, sans-serif;
+            font-size: 2.2rem;
+            color: #428ed0 !important;
+            letter-spacing: 2px;
+        }
+        .navbar .nav > li > a {
+            color: #428ed0 !important;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        .center-card {
+            max-width: 420px;
+            margin: 80px auto 0 auto;
+            background: rgba(255,255,255,0.75);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(66,142,208,0.15);
+            padding: 40px 30px 30px 30px;
+            text-align: center;
+            backdrop-filter: blur(6px);
+        }
+        .center-card h2 {
+            font-family: 'Luckiest Guy', 'Anton', cursive;
+            color: #428ed0;
+            font-size: 2.6rem;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        .center-card p {
+            color: #222;
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+        }
+        .login-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #428ed0 60%, #7ec8e3 100%);
+            color: #fff !important;
+            font-weight: bold;
+            font-size: 1.1rem;
+            padding: 12px 36px;
+            border: none;
+            border-radius: 30px;
+            box-shadow: 0 4px 16px rgba(66,142,208,0.12);
+            text-decoration: none;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        .login-btn:hover {
+            background: linear-gradient(90deg, #7ec8e3 0%, #428ed0 100%);
+            color: #fff;
+            box-shadow: 0 8px 24px rgba(66,142,208,0.18);
+        }
+        .footer {
+            width: 100%;
+            text-align: center;
+            padding: 15px 0;
+            background: rgba(255,255,255,0.8);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            font-size: 1.1rem;
+            z-index: 999;
+            color: #090909;
+            letter-spacing: 1px;
+        }
+        @media (max-width: 600px) {
+            .center-card {
+                margin: 40px 10px 0 10px;
+                padding: 25px 10px 20px 10px;
+            }
+            .center-card h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="body-bg">
+    <!-- Navigation -->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">LMS <span style="color:#7ec8e3;">Admin</span></a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="{% url 'accounts:login' %}">
+                            <i class="fa fa-sign-in"></i> Login
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- /Navigation -->
+
+    <div class="center-card">
+        <h2>Leave Management System</h2>
+        <p style="font-size:1.3rem; color:#555; margin-bottom:7px;">ADMIN/EMPLOYEE PORTAL</p>
+        <p>
+            Welcome to the LMS portal.<br>
+            Manage employees, approve or reject leave requests, and keep your organization running smoothly.
+        </p>
+        <a href="{% url 'accounts:login' %}" class="login-btn">
+            <i class="fa fa-sign-in"></i> Login Now
+        </a>
+    </div>
+
+    <footer class="footer">
+        &copy; Developed by Saumya Saanvi
+    </footer>
+
+    <!--   Core JS Files   -->
+    <script src="{% static 'js/jquery.3.2.1.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}" type="text/javascript"></script>
+</body>
+</html>

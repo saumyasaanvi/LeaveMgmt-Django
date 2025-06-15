@@ -1,0 +1,301 @@
+{% extends '_layout.html' %}
+{% load static %} 
+{% block title %} {{ title }} {% endblock %}
+
+{% block navheader %}
+    {% include 'includes/navheader_employee_app.html' %}
+{% endblock %}
+
+{% block stylesheet %}
+<style>
+/* Modern Baby Blue Theme Table Styling */
+body {
+    font-family: 'Alice', serif;
+    font-size: 17px;
+    background: linear-gradient(120deg, #428ed0 0%, #b3c6e7 100%);
+    min-height: 100vh;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: url("{% static 'img/image.png' %}") no-repeat center center/cover;
+    opacity: 0.3;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.content {
+    padding: 40px 0;
+}
+
+/* Modern Table Container */
+.table-shadow {
+    background: rgba(255, 255, 255, 0.85);
+    padding: 2.5%;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px 0 rgba(66, 142, 208, 0.15);
+    backdrop-filter: blur(6px);
+    margin: 20px auto;
+    max-width: 95%;
+}
+
+/* Table Header Styling */
+.table-description h4 {
+    font-family: 'Russo One', 'Trebuchet MS', Arial, sans-serif;
+    color: #428ed0;
+    font-size: 2.2rem;
+    margin: 15px 0 25px 0;
+    letter-spacing: 1px;
+    text-shadow: none;
+}
+
+/* Modern Table Styling */
+.table {
+    background: transparent;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 0;
+}
+
+.table thead th {
+    background: linear-gradient(90deg, #428ed0 60%, #7ec8e3 100%);
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding: 18px 16px;
+    border: none;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+.table thead th:first-child {
+    border-top-left-radius: 12px;
+}
+
+.table thead th:last-child {
+    border-top-right-radius: 12px;
+}
+
+.table tbody tr {
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.table tbody tr:hover {
+    background: rgba(66, 142, 208, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(66, 142, 208, 0.15);
+}
+
+.table tbody td {
+    padding: 16px;
+    border: none;
+    text-align: center;
+    font-size: 1rem;
+    color: #333;
+    border-bottom: 1px solid rgba(66, 142, 208, 0.1);
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 12px;
+}
+
+.table tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 12px;
+}
+
+/* Modern Badge Styling */
+.badge {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.badge-success {
+    background: linear-gradient(90deg, #82b72a 0%, #a3d63c 100%) !important;
+    color: #fff !important;
+}
+
+.badge-danger {
+    background: linear-gradient(90deg, #dc3545 0%, #fd7b7b 100%) !important;
+    color: #fff !important;
+}
+
+.badge-warning {
+    background: linear-gradient(90deg, #ffc107 0%, #ffeb3b 100%) !important;
+    color: #333 !important;
+}
+
+/* Action Links */
+.table tbody td a {
+    color: #428ed0;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.table tbody td a:hover {
+    background: rgba(66, 142, 208, 0.1);
+    color: #2c5aa0;
+    text-decoration: none;
+}
+
+/* Alert Styling */
+.alert {
+    border-radius: 12px;
+    border: none;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.alert-warning {
+    background: linear-gradient(90deg, #fd7b7b 0%, #ff9999 100%);
+    color: #fff;
+}
+
+.alert-success {
+    background: linear-gradient(90deg, #82b72a 0%, #a3d63c 100%);
+    color: #fff;
+}
+
+#override-start {
+    background: none !important;
+    top: 35% !important;
+    right: 13px;
+    color: #fff;
+    font-size: 24px;
+    opacity: 0.8;
+}
+
+/* No Data Message */
+.table-shadow span {
+    display: block;
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    font-size: 1.1rem;
+    padding: 40px 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .table-shadow {
+        padding: 15px;
+        margin: 10px;
+        border-radius: 15px;
+    }
+    
+    .table-description h4 {
+        font-size: 1.8rem;
+    }
+    
+    .table thead th,
+    .table tbody td {
+        padding: 12px 8px;
+        font-size: 0.9rem;
+    }
+    
+    .badge {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .table-responsive {
+        border-radius: 15px;
+        overflow: hidden;
+    }
+    
+    .table {
+        font-size: 0.85rem;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="content">
+    <section class="container-fluid">
+        <section class="row">
+            <section class="col col-sm-10 offset-sm-1">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                            <button type="button" class="close" id="override-start" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </section>
+        </section>
+
+        <!-- TABLE -->
+        <div class="table-responsive table-shadow">
+            <div class="text-center table-description">
+                <h4 class="title-h3">{{ employee.get_full_name }}</h4>
+            </div>
+            {% if leave_list %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Type</th>
+                        <th scope="col">Day(s)</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for leave in leave_list %}
+                    <tr>
+                        <td>{{ leave.leavetype }}</td>
+                        <td>{{ leave.leave_days }}</td>
+                        <td>
+                            {% if leave.is_approved %}
+                                <span class="badge badge-success">{{ leave.status }}</span>
+                            {% elif leave.is_rejected %}
+                                <span class="badge badge-danger">{{ leave.status }}</span>
+                            {% else %}
+                                <span class="badge badge-warning">{{ leave.status }}</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'dashboard:userleaveview' leave.id %}">
+                                View Details
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <span>No Leaves can be found...</span>
+            {% endif %}
+        </div>
+        <!-- /TABLE -->
+    </section>
+</section>
+{% endblock %}
+
+{% block extrajs %}
+// Additional JavaScript can be added here if needed
+{% endblock %}

@@ -1,0 +1,95 @@
+{% load static %}
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}My Dashboard{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Static CSS Files -->
+     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/animate.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/light-bootstrap-dashboard.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/demo.css' %}" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="{% static 'css/pe-icon-7-stroke.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+
+    <!-- Custom or Page-specific CSS -->
+    <style>
+        {% block stylesheet %}
+        /* Default styles or leave empty for child templates to override */
+        {% endblock %}
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <!-- Sidebar -->
+    <div class="sidebar" data-color="blue" data-image="{% static 'img/sidebar-4.jpg' %}">
+        <div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="#" class="simple-text">LMS</a>
+            </div>
+            <ul class="nav">
+                <li class="active">
+                    <a href="{% url 'dashboard:dashboard' %}">
+                        <i class="pe-7s-graph"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                {% if request.user.is_superuser and request.user.is_staff %}
+                <li>
+                    <a href="{% url 'dashboard:employees' %}">
+                        <i class="pe-7s-users"></i>
+                        <p>Employee Section</p>
+                    </a>
+                </li>
+                {% endif %}
+                <li>
+                    {% if request.user.is_superuser %}
+                        <a href="{% url 'dashboard:leaveslist' %}">
+                    {% else %}
+                        <a href="{% url 'dashboard:staffleavetable' %}">
+                    {% endif %}
+                        <i class="pe-7s-news-paper"></i>
+                        <p>Leave Section</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Panel -->
+    <div class="main-panel">
+        {% block navheader %}
+            {% include 'includes/navheader_default.html' %}
+        {% endblock %}
+
+        {% block content %}
+        <!-- Page Content -->
+        {% endblock %}
+    </div>
+</div>
+
+<!-- Core JS Files -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- jQuery UI (second) -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="{% static 'js/jquery.3.2.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/chartist.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-notify.js' %}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+<script src="{% static 'js/light-bootstrap-dashboard.js' %}"></script>
+<script src="{% static 'js/demo.js' %}"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<!-- Additional scripts for child templates -->
+<script>
+{% block extrajs %}{% endblock %}
+</script>
+</body>
+</html>
