@@ -66,4 +66,4 @@ Pull requests are welcome! Please open an issue first to discuss proposed change
 ## 📄 License
 MIT
 
-###Developed by Saumya Saanvi ❤️
+Developed by Saumya Saanvi ❤️
